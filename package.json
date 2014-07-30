@@ -1,0 +1,29 @@
+{
+  "name": "openfeed",
+  "preferGlobal": true,
+  "version": "0.1.0",
+  "author": "Wa <callmewa@gmail.com>",
+  "description": "OpenFeed Project",
+  "contributors": [
+    {}
+  ],
+  "bin": {
+    "http-server": "./bin"
+  },
+  "scripts": {},
+  "main": "./app_server",
+  "repository": {},
+  "keywords": [
+    "server"
+  ],
+  "dependencies": {
+    "config": "~0.4.35",
+    "hiredis": "^0.1.17",
+    "q": "~1.0.0",
+    "redis": "^0.11.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8"
+  }
+}
