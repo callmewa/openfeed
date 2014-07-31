@@ -5,6 +5,7 @@
 
 var feed = require('../lib/feed');
 var assert = require("assert");
+var should = require("should");
 
 describe('FeedTest', function(){
   describe('AddPost', function(){
@@ -25,20 +26,25 @@ describe('FeedTest', function(){
     it('should add and get the post without error', function(done){
       feed.addPost(feed.UserPost.createPost('post1', 'user1', 'text', 'blah blah blah'));
       feed.getPost('post1', function(err, post){
-        assert.equal(JSON.parse(post).userId, 'user1');
+        JSON.parse(post).userId.should.equal('user1');
+        //assert.equal(JSON.parse(post).userId, 'user1');
       });
       done();
     });
 
-    //TODO: this need to be async or promised
+    //TODO: this need to be async or promised >Q.nfcall(FS.readFile, "foo.txt", "utf-8");
     it('should publish a post to feed without error', function(done){
-      feed.publishPostToFeeds('post1', 'user1', function(err, result){
-        console.log('published feed ' + result);
-      });
-      feed.getFeed('user2');
-      feed.getFeed('user3', function(err, feeds){
-        console.log(feeds);
+      feed.publishPostToFeeds('post1', 'user1', function(){
+        feed.getFeed('user2', function(err, feeds){
+          console.log(feeds);
+          assert(feeds.indexOf('post1')!=-1 );
+        });
+        feed.getFeed('user3', function(err, feeds){
+          console.log(feeds);
+          assert(feeds.indexOf('post1')!=-1 );
+        });
         done();
+
       });
 
     });
