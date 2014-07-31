@@ -35,6 +35,12 @@ describe('FeedTest', function(){
     it('should publish a post to feed without error', function(done){
       feed.publishPostToFeeds('post1', 'user1', function(err, result){
         feed.redis.print(err, JSON.stringify(result));
+        feed.getFeed('user2', function(err, feeds){
+          assert(feeds.indexOf('post1')!=-1 );
+        });
+        feed.getFeed('user3', function(err, feeds){
+          assert(feeds.indexOf('post1')!=-1 );
+        });
         done();
       });
     });
