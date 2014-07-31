@@ -19,6 +19,7 @@
   "dependencies": {
     "config": "~0.4.35",
     "hiredis": "^0.1.17",
+    "moment": "^2.7.0",
     "q": "~1.0.0",
     "redis": "^0.11.0"
   },
