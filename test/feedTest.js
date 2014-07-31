@@ -32,24 +32,13 @@ describe('FeedTest', function(){
       done();
     });
 
-    //TODO: this need to be async or promised >Q.nfcall(FS.readFile, "foo.txt", "utf-8");
     it('should publish a post to feed without error', function(done){
-      feed.publishPostToFeeds('post1', 'user1', function(){
-        feed.getFeed('user2', function(err, feeds){
-          console.log(feeds);
-          assert(feeds.indexOf('post1')!=-1 );
-        });
-        feed.getFeed('user3', function(err, feeds){
-          console.log(feeds);
-          assert(feeds.indexOf('post1')!=-1 );
-        });
+      feed.publishPostToFeeds('post1', 'user1', function(err, result){
+        feed.redis.print(err, JSON.stringify(result));
         done();
-
       });
-
     });
 
+  });
 
-
-  })
 });
