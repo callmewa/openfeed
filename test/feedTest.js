@@ -32,6 +32,19 @@ describe('FeedTest', function(){
       done();
     });
 
+    it('should like get likes post without error', function(done){
+      feed.likePost('post1', 'user2');
+      feed.likePost('post1', 'user3');
+      feed.getPostLikes('post1',function(err, result){
+        feed.redis.print(err, JSON.stringify(result));
+        assert(result.length === 2);
+        result.should.containEql('user2');
+        result.should.containEql('user3');
+        done();
+      });
+    });
+
+
     it('should publish a post to feed without error', function(done){
       feed.publishPostToFeeds('post1', 'user1', function(err, result){
         feed.redis.print(err, JSON.stringify(result));
