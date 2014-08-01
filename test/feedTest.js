@@ -24,7 +24,7 @@ describe('FeedTest', function(){
 
 
     it('should add and get the post without error', function(done){
-      feed.addPost(feed.UserPost.createPost('post1', 'user1', 'text', 'blah blah blah'));
+      feed.addPost( feed.UserPost.createPost('post1', 'user1', 'text', 'blah blah blah'));
       feed.getPost('post1', function(err, post){
         JSON.parse(post).userId.should.equal('user1');
         //assert.equal(JSON.parse(post).userId, 'user1');
@@ -41,6 +41,17 @@ describe('FeedTest', function(){
         feed.getFeed('user3', function(err, feeds){
           assert(feeds.indexOf('post1')!=-1 );
         });
+        done();
+      });
+    });
+
+    it('should publish a post to feed without error', function(done){
+      feed.addComment(feed.Comment.createComment('post1', 'comment1', 'user1', 'this is a comment 1'));
+      feed.addComment(feed.Comment.createComment('post1', 'comment2', 'user1', 'this is a comment 2'));
+
+      feed.getThread('post1',  function(err, result){
+        feed.redis.print(err, JSON.stringify(result));
+        assert(result.length === 2);
         done();
       });
     });
