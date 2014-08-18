@@ -4,6 +4,7 @@
 //TODO: use should.js
 
 var feed = require('../lib/feed');
+var post = require('../lib/post');
 var redisUtil = require('../lib/redis/redisUtil');
 var assert = require("assert");
 var should = require("should");
@@ -25,7 +26,7 @@ describe('FeedTest', function(){
 
 
     it('should add and get the post without error', function(done){
-      feed.addPost( feed.UserPost.createPost('post1', 'user1', 'text', 'blah blah blah'));
+      feed.addPost( post.UserPost.createPost('post1', 'user1', 'text', 'blah blah blah'));
       feed.getPost('post1', function(err, post){
         JSON.parse(post).userId.should.equal('user1');
         //assert.equal(JSON.parse(post).userId, 'user1');
