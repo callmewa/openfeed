@@ -10,7 +10,7 @@ var should = require("should");
 
 describe('FeedTest', function(){
   describe('AddPost', function(){
-    it('drop current database', function(){
+    it('flush current Redis db', function(){
       redisUtil.client.flushdb();
     });
 
