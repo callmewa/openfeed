@@ -4,13 +4,14 @@
 //TODO: use should.js
 
 var feed = require('../lib/feed');
+var redisUtil = require('../lib/redis/redisUtil');
 var assert = require("assert");
 var should = require("should");
 
 describe('FeedTest', function(){
   describe('AddPost', function(){
     it('drop current database', function(){
-      feed.client.flushdb();
+      redisUtil.client.flushdb();
     });
 
     it('should add and get followers without error', function(done){
@@ -36,7 +37,7 @@ describe('FeedTest', function(){
       feed.likePost('post1', 'user2');
       feed.likePost('post1', 'user3');
       feed.getPostLikes('post1',function(err, result){
-        feed.redis.print(err, JSON.stringify(result));
+        redisUtil.redis.print(err, JSON.stringify(result));
         assert(result.length === 2);
         result.should.containEql('user2');
         result.should.containEql('user3');
@@ -47,7 +48,7 @@ describe('FeedTest', function(){
 
     it('should publish a post to feed without error', function(done){
       feed.publishPostToFeeds('post1', 'user1', function(err, result){
-        feed.redis.print(err, JSON.stringify(result));
+        redisUtil.redis.print(err, JSON.stringify(result));
         feed.getFeed('user2', function(err, feeds){
           assert(feeds.indexOf('post1')!=-1 );
         });
@@ -63,7 +64,7 @@ describe('FeedTest', function(){
       feed.addComment(feed.Comment.createComment('post1', 'comment2', 'user1', 'this is a comment 2'));
 
       feed.getThread('post1',  function(err, result){
-        feed.redis.print(err, JSON.stringify(result));
+        redisUtil.redis.print(err, JSON.stringify(result));
         assert(result.length === 2);
         done();
       });
