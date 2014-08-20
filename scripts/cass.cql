@@ -102,6 +102,7 @@ CREATE TABLE post (
     is_answered boolean, // optional (default false), is the question answered. Only valid for question post
     question_points int, // optional, points for the question. Only valid for question post.
     question_reach_percentage int, // optional, reach percentage for this question. Only valid for question post.
+    is_product boolean, // optional (default false), whether it is a product post.
     likes int, // how many likes the post received
     comments int, // the number of comments on the post
     is_anonymous boolean, // optional (default false), whether the comment is anonymous
