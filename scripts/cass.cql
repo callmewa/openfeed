@@ -70,16 +70,16 @@ CREATE TABLE user_geo (
 
 /* users followed by users */
 CREATE TABLE followed_by (
-    user_id varchar,  // user id of the user being followed
-    follower_id varchar, // user id of the user following the other
+    user_id ascii,  // user id of the user being followed
+    follower_id ascii, // user id of the user following the other
     is_facebook_friends boolean, // are they facebook friends
     PRIMARY KEY (user_id, follower_id)
 );
 
 /* users follow other users */
 CREATE TABLE follow (
-    user_id varchar, // user id of the user who follow others
-    following_id varchar, // user id of the user is following
+    user_id ascii, // user id of the user who follow others
+    following_id ascii, // user id of the user is following
     PRIMARY KEY(user_id, following_id)
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE follow (
 CREATE TABLE post (
     date varchar, // 20140528, the date part of post_id, which is the date post is created
     post_id timeUUID, // post id. It is timeUUID, so the timestamp is the time the post is created
-    user_id varchar, // id of user that writes the post
+    user_id ascii, // id of user that writes the post
     post_type ascii, // text, picture, product, article, question
     post_category ascii, // 3m, 1 year, school year 2, etc, the category of the post
     for_gender ascii, // optional, F/M

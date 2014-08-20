@@ -6,6 +6,11 @@
 var feed = require('../lib/feed');
 var post = require('../lib/post');
 var redisUtil = require('../lib/redis/redisUtil');
+var follow = require('../lib/follow');
+var dbUtil = require('../lib/db/dbUtil');
+var cql = dbUtil.cql;
+var dbClient = dbUtil.dbClient;
+
 var assert = require("assert");
 var should = require("should");
 
@@ -16,9 +21,9 @@ describe('FeedTest', function(){
     });
 
     it('should add and get followers without error', function(done){
-      feed.followUser('user1', 'user2');
-      feed.followUser('user1', 'user3');
-      feed.getFollowers('user1', function(err, follows){
+      follow.followUser('user1', 'user2');
+      follow.followUser('user1', 'user3');
+      follow.getFollowers('user1', function(err, follows){
         assert(follows.indexOf('user2')!=-1 && follows.indexOf('user3')!=-1, 'missing follower(s)');
       });
       done();
@@ -26,8 +31,36 @@ describe('FeedTest', function(){
 
 
     it('should add and get the post without error', function(done){
-      feed.addPost( post.UserPost.createPost('post1', 'user1', 'text', 'blah blah blah'));
-      feed.getPost('post1', function(err, post){
+      var postId = cql.types.timeuuid();
+      console.log('FeedTest, add post, postId=' + postId);
+      feed.addPost(post.UserPost.createPost(
+          postId,
+          "user1",
+          "R",
+          "3m",
+          null,
+          "It is a test",
+          null,
+          null,
+          null,
+          null,
+          null,
+          "P",
+          false,
+          null,
+          null,
+          0,
+          0,
+          false,
+          null),
+          function (err) {
+            if (err) {
+              console.err("err:" + err);
+            } else {
+              console.log('debug success');
+            }
+          });
+      feed.getPost(postId, function(err, post){
         JSON.parse(post).userId.should.equal('user1');
         //assert.equal(JSON.parse(post).userId, 'user1');
       });
