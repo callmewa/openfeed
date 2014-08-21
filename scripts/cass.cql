@@ -252,6 +252,7 @@ CREATE TABLE points_statement (
 CREATE TABLE product_list (
     user_id ascii, // user id in user table
     post_id timeUUID, // post id for the product
+    time_inserted timestamp, // time inserted
     PRIMARY KEY (user_id, post_id)
 );
 
