@@ -58,7 +58,6 @@ describe('FeedTest', function(){
           feed.getPost(postId, function(err, post){
             JSON.parse(post).userId.should.equal('user1');
             //assert.equal(JSON.parse(post).userId, 'user1');
-            done();
           });
         });
       done();
