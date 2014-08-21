@@ -53,17 +53,13 @@ describe('FeedTest', function(){
           0,
           false,
           null),
-          function (err) {
-            if (err) {
-              console.err("err:" + err);
-            } else {
-              console.log('debug success');
-            }
+          function(err, result){
+          feed.getPost(postId, function(err, post){
+            JSON.parse(post).userId.should.equal('user1');
+            //assert.equal(JSON.parse(post).userId, 'user1');
+            done();
           });
-      feed.getPost(postId, function(err, post){
-        JSON.parse(post).userId.should.equal('user1');
-        //assert.equal(JSON.parse(post).userId, 'user1');
-      });
+        });
       done();
     });
 
