@@ -49,6 +49,7 @@ describe('FeedTest', function(){
           false,
           null,
           null,
+          false,
           0,
           0,
           false,
