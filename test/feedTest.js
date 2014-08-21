@@ -8,6 +8,7 @@ var post = require('../lib/post');
 var redisUtil = require('../lib/redis/redisUtil');
 var follow = require('../lib/follow');
 var dbUtil = require('../lib/db/dbUtil');
+var commentUtil = require('../lib/comment');
 var cql = dbUtil.cql;
 var dbClient = dbUtil.dbClient;
 
@@ -90,8 +91,10 @@ describe('FeedTest', function(){
     });
 
     it('should publish a post to feed without error', function(done){
-      feed.addComment(feed.Comment.createComment('post1', 'comment1', 'user1', 'this is a comment 1'));
-      feed.addComment(feed.Comment.createComment('post1', 'comment2', 'user1', 'this is a comment 2'));
+      feed.addComment(commentUtil.Comment.createComment(
+          'post1', 'comment1', 'user1', 'this is a comment 1'));
+      feed.addComment(commentUtil.Comment.createComment(
+          'post1', 'comment2', 'user1', 'this is a comment 2'));
 
       feed.getThread('post1',  function(err, result){
         redisUtil.redis.print(err, JSON.stringify(result));

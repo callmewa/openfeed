@@ -124,8 +124,9 @@ CREATE TABLE comment (
     likes int, // number of likes for this comment
     is_anonymous boolean, // whether the comment is anonymous
     is_answer boolean, // optional (default false), Is it an answer to a question? Only valid for answer comments on question post
+    is_accepted_answer boolean, // optional (default false), Is it an answer accepted? Only valid for answer comments on question post
     answer_points_earned int, // optional, points earned. Only valid for answer comments on question post.
-    status ascii, // optional, spam, inappropriate, irrelevant
+    status ascii, // optional, 'spam', 'inappropriate', 'irrelevant'
     time_created timestamp, // timestamp of the comment being created
     time_edited timestamp, // timestamp the comment being edited
     PRIMARY KEY (post_id, comment_id)
