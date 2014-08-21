@@ -170,6 +170,13 @@ CREATE TABLE system_user (
     user_id ascii PRIMARY KEY, // user id
 );
 
+/* Posts by categories. It will be used when user explore posts by category. */
+CREATE TABLE category_posts (
+   post_category ascii, // post category
+   post_id timeUUID, // post id
+   PRIMARY KEY (post_category, post_id)
+) WITH CLUSTERING ORDER BY (post_id DESC);
+
 /* Divide system posts into different buckets based on post category (3m, 1y, 1-2y, etc). */
 CREATE TABLE system_post_bucket (
     post_category ascii, // post category
