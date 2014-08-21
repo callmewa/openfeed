@@ -4,19 +4,26 @@
 //TODO: use should.js
 
 var feed = require('../lib/feed');
+var post = require('../lib/post');
+var redisUtil = require('../lib/redis/redisUtil');
+var follow = require('../lib/follow');
+var dbUtil = require('../lib/db/dbUtil');
+var cql = dbUtil.cql;
+var dbClient = dbUtil.dbClient;
+
 var assert = require("assert");
 var should = require("should");
 
 describe('FeedTest', function(){
   describe('AddPost', function(){
-    it('drop current database', function(){
-      feed.client.flushdb();
+    it('flush current Redis db', function(){
+      redisUtil.client.flushdb();
     });
 
     it('should add and get followers without error', function(done){
-      feed.followUser('user1', 'user2');
-      feed.followUser('user1', 'user3');
-      feed.getFollowers('user1', function(err, follows){
+      follow.followUser('user1', 'user2');
+      follow.followUser('user1', 'user3');
+      follow.getFollowers('user1', function(err, follows){
         assert(follows.indexOf('user2')!=-1 && follows.indexOf('user3')!=-1, 'missing follower(s)');
       });
       done();
@@ -24,8 +31,36 @@ describe('FeedTest', function(){
 
 
     it('should add and get the post without error', function(done){
-      feed.addPost( feed.UserPost.createPost('post1', 'user1', 'text', 'blah blah blah'));
-      feed.getPost('post1', function(err, post){
+      var postId = cql.types.timeuuid();
+      console.log('FeedTest, add post, postId=' + postId);
+      feed.addPost(post.UserPost.createPost(
+          postId,
+          "user1",
+          "R",
+          "3m",
+          null,
+          "It is a test",
+          null,
+          null,
+          null,
+          null,
+          null,
+          "P",
+          false,
+          null,
+          null,
+          0,
+          0,
+          false,
+          null),
+          function (err) {
+            if (err) {
+              console.err("err:" + err);
+            } else {
+              console.log('debug success');
+            }
+          });
+      feed.getPost(postId, function(err, post){
         JSON.parse(post).userId.should.equal('user1');
         //assert.equal(JSON.parse(post).userId, 'user1');
       });
@@ -36,7 +71,7 @@ describe('FeedTest', function(){
       feed.likePost('post1', 'user2');
       feed.likePost('post1', 'user3');
       feed.getPostLikes('post1',function(err, result){
-        feed.redis.print(err, JSON.stringify(result));
+        redisUtil.redis.print(err, JSON.stringify(result));
         assert(result.length === 2);
         result.should.containEql('user2');
         result.should.containEql('user3');
@@ -47,7 +82,7 @@ describe('FeedTest', function(){
 
     it('should publish a post to feed without error', function(done){
       feed.publishPostToFeeds('post1', 'user1', function(err, result){
-        feed.redis.print(err, JSON.stringify(result));
+        redisUtil.redis.print(err, JSON.stringify(result));
         feed.getFeed('user2', function(err, feeds){
           assert(feeds.indexOf('post1')!=-1 );
         });
@@ -63,7 +98,7 @@ describe('FeedTest', function(){
       feed.addComment(feed.Comment.createComment('post1', 'comment2', 'user1', 'this is a comment 2'));
 
       feed.getThread('post1',  function(err, result){
-        feed.redis.print(err, JSON.stringify(result));
+        redisUtil.redis.print(err, JSON.stringify(result));
         assert(result.length === 2);
         done();
       });

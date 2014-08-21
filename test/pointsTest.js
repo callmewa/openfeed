@@ -4,13 +4,14 @@
 //TODO: use should.js
 
 var points = require('../lib/points');
+var redisUtil = require('../lib/redis/redisUtil');
 var assert = require("assert");
 var should = require("should");
 
 describe('PointsTest', function() {
   describe('ChangePoints', function() {
-    it('drop current database', function() {
-      points.client.flushdb();
+    it('flush current Redis db', function() {
+      redisUtil.client.flushdb();
     });
 
     it('should change points without error', function(done) {
