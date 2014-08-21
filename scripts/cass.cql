@@ -248,14 +248,6 @@ CREATE TABLE points_statement (
     PRIMARY KEY (user_id, statement_id)
 )  WITH CLUSTERING ORDER BY (statement_id DESC);
 
-/* product list of a user owns. */
-CREATE TABLE product_list (
-    user_id ascii, // user id in user table
-    post_id timeUUID, // post id for the product
-    time_inserted timestamp, // time inserted
-    PRIMARY KEY (user_id, post_id)
-);
-
 CREATE TABLE category_mapping (
     category_name ascii PRIMARY KEY, // post category e.g. 3m - 5m
     mapped_ids set<int>, // mapped age ids, e.g. [103,104,105], 0month is 100, 2m is 102, 1year is 113, 2 year is 114, 3 year is 115. 1week is 1, 2 week is 2, etc.
@@ -286,7 +278,7 @@ INSERT INTO system_settings (name, value) VALUES ('question_cost', '100');
 CREATE TABLE user_products (
     user_id ascii, // user id in user table
     post_id timeUUID, // product post id
-    post_category_value int, // integer value for post catetory; duplicate form post table
+    post_category ascii, // post catetory; duplicate form post table
     for_gender ascii, // optional, F/M; duplicate form post table
     message text, // optional, the message of the post; duplicate form post table
     picture_url varchar, // optional, url of the picture, we can save the picture in S3 server; duplicate form post table
@@ -294,10 +286,11 @@ CREATE TABLE user_products (
     external_link_image_url varchar, // optional, url to the image in external link. Can be image url for a product url; duplicate form post table
     external_link_summary varchar, // optional, short summary of the external link. It can be the preview summary of the content of external link; duplicate form post table
     product_bar_code varchar, // optional, bar code of product; duplicate form post table
+    publicity ascii, // optional (default P), P for public, F for follower only, V for private
     time_inserted timestamp, // timestamp of inserted of this record
     PRIMARY KEY (user_id, post_id)
 );
-CREATE INDEX user_products_category ON user_products (post_category_value);
+CREATE INDEX user_products_category ON user_products (post_category);
 
 /* User saved posts */
 CREATE TABLE saved_posts (
