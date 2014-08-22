@@ -118,7 +118,7 @@ CREATE TABLE post (
 CREATE TABLE comment (
     post_id timeUUID, // post id
     comment_id timeUUID, // comment id
-    commenter_user_id varchar, // user id of the commenter
+    commenter_user_id ascii, // user id of the commenter
     message text, // comment message
     picture_url varchar, // url to picture in the comment
     likes int, // number of likes for this comment
@@ -174,9 +174,11 @@ CREATE TABLE system_user (
 /* Posts by categories. It will be used when user explore posts by category. */
 CREATE TABLE category_posts (
    post_category ascii, // post category
-   post_id timeUUID, // post id
+   post_id timeUUID, // post id,
+   time_lastupdated timestamp, // the last time the post is editted or commented.
    PRIMARY KEY (post_category, post_id)
 ) WITH CLUSTERING ORDER BY (post_id DESC);
+CREATE INDEX category_posts_time on category_posts(time_lastupdated);
 
 /* Divide system posts into different buckets based on post category (3m, 1y, 1-2y, etc). */
 CREATE TABLE system_post_bucket (
