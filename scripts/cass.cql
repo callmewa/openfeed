@@ -135,7 +135,7 @@ CREATE TABLE comment (
 /* likes on a post. The primary key is (post_id, liker_user_id). So E post_like are partitioned by post_id. */
 CREATE TABLE post_like (
     post_id timeUUID, // post id
-    like_user_id varchar, // user id of the user likes this post
+    like_user_id ascii, // user id of the user likes this post
     like_time timestamp, // timestamp of the like
     PRIMARY KEY (post_id, like_user_id)
 );
