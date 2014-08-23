@@ -1,10 +1,12 @@
 /* For production, we will use higher replication_factor. */
-/* 
+/*
 ./cqlsh
-CREATE KEYSPACE myks WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};
-use myks;
 source '~/openfeed/scripts/cass.cql'
 */
+
+drop KEYSPACE myks;
+CREATE KEYSPACE myks WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 1};
+use myks;
 
 /* user table. User choose user name instead of using real name, like Instragram. May need to create an index table on facebook_id. */
 CREATE TABLE user (
@@ -52,7 +54,7 @@ CREATE TABLE setting (
     notif_sound boolean, //  optional (default true), sound on notification
     notif_led boolean,  // optional (default true), light led on notification
     notif_on_comment boolean, // optional (default true)
-    notif_on_like boolean, // optional (default true), 
+    notif_on_like boolean, // optional (default true),
     follow_setting ascii, // optional(default need_approve), need_approve/public/not_allowed
     notif_follow_request_received  boolean, // optional(default true) notification on follow request
     notif_follow_request_accepted boolean, // optional(default true), notification on follow request

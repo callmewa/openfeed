@@ -90,7 +90,7 @@ describe('FeedTest', function(){
       });
     });
 
-    it('should publish a post to feed without error', function(done){
+    it('should get thread without error', function(done){
       feed.addComment(commentUtil.Comment.createComment(
           'post1', 'comment1', 'user1', 'this is a comment 1'));
       feed.addComment(commentUtil.Comment.createComment(
