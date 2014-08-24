@@ -116,6 +116,17 @@ CREATE TABLE post (
     PRIMARY KEY (date, post_id)
 ) WITH CLUSTERING ORDER BY (post_id DESC);
 
+/*
+create table post_info (
+    post_id uuid,
+    info_id timeuuid,
+    type string,    //comment, like, comment_like, post
+    message text, // message object
+    reference_id, //for likes it reference a target
+    author_id, author of the info
+ )primary key (post_id, info_id);
+*/
+
 /* user's comments on a post. The primary key is (post_id, comment_id). So comments are partitioned by post_id, and the comments are clustered and sort by timestamp (comment_id) in each post. */
 CREATE TABLE comment (
     post_id timeUUID, // post id
