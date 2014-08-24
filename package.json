@@ -10,7 +10,9 @@
   "bin": {
     "http-server": "./bin"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "mocha --ui bdd --reporter spec  ./test --recursive -t 15000"
+  },
   "main": "./app_server",
   "repository": {},
   "keywords": [
