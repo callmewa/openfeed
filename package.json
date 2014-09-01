@@ -19,13 +19,16 @@
     "server"
   ],
   "dependencies": {
+    "body-parser": "^1.6.7",
     "config": "~0.4.35",
+    "debug": "^1.0.4",
+    "express": "^4.8.7",
     "hiredis": "^0.1.17",
     "moment": "^2.7.0",
     "node-cassandra-cql": "^0.5.x",
+    "node-uuid": "^1.4.1",
     "q": "~1.0.0",
-    "redis": "^0.11.0",
-    "node-uuid": "^1.4.1"
+    "redis": "^0.11.0"
   },
   "license": "MIT",
   "engines": {
