@@ -9,10 +9,18 @@ service.addDelegate(redisFeed);
 
 
 exports.addFollower = function(req, res) {
-  console.log(req.body);
   var userId = req.body.userId;
   var followerId = req.body.followerId;
   service.followUser(userId, followerId, function(error, result){
+    console.log(result);
+    res.status(200).end(""+ result);
+  });
+};
+
+
+exports.addPost = function (req, res) {
+  var post = req.body.post;
+  service.addPost(post, function(error, result){
     console.log(result);
     res.status(200).end(""+ result);
   });
