@@ -3,7 +3,10 @@
  */
 var FeedService = require("../lib/feedService"),
   service = new FeedService(),
-  redisFeed = require("../lib/redisDelegate");
+  redisFeed = require("../lib/redisDelegate"),
+  utils = require("../lib/utils"),
+  moment = require("moment");
+
 
 service.addDelegate(redisFeed);
 
@@ -19,7 +22,9 @@ exports.addFollower = function(req, res) {
 
 
 exports.addPost = function (req, res) {
-  var post = req.body.post;
+  var post = req.body;
+  post.postId = utils.genId();
+  post.timeMsCreated = moment().valueOf();
   service.addPost(post, function(error, result){
     console.log(result);
     res.status(200).end(""+ result);

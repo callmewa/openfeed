@@ -4,6 +4,7 @@
 
 var assert = require("assert");
 var should = require("should");
+var utils = require("../lib/utils");
 var FeedService = require("../lib/feedService"),
   service = new FeedService(),
   redisFeed = require("../lib/redisDelegate"),
@@ -44,8 +45,9 @@ describe('redisFeedTest', function(){
 
 
   it('should add and get the post without error', function(done){
-    redisFeed.addPost( FeedService.UserPost.createPost('post1', 'user1', 'text', 'blah blah blah'));
-    redisFeed.getPost('post1', function(err, post){
+	var postId = utils.genId();
+    redisFeed.addPost( FeedService.UserPost.createPost(postId, 'user1', 'text', 'blah blah blah'));
+    redisFeed.getPost(postId, function(err, post){
       JSON.parse(post).userId.should.equal('user1');
       //assert.equal(JSON.parse(post).userId, 'user1');
     });
