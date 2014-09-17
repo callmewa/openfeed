@@ -46,11 +46,14 @@ describe('redisFeedTest', function(){
 
   it('should add and get the post without error', function(done){
 	var postId = utils.genId();
-    redisFeed.addPost( FeedService.UserPost.createPost(postId, 'user1', 'text', 'blah blah blah'));
-    redisFeed.getPost(postId, function(err, post){
-      JSON.parse(post).userId.should.equal('user1');
-      //assert.equal(JSON.parse(post).userId, 'user1');
-    });
+    redisFeed.addPost(
+    		FeedService.UserPost.createPost(postId, 'user1', 'text', 'blah blah blah'),
+    		function(err, result) {
+    			redisFeed.getPost(postId, function(err, post){
+    				JSON.parse(post).userId.should.equal('user1');
+    				//assert.equal(JSON.parse(post).userId, 'user1');
+    			});
+    		});
     done();
   });
 
