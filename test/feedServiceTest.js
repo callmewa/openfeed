@@ -74,10 +74,28 @@ describe('redisFeedTest', function(){
     redisFeed.publishPostToFeeds({postId: 'post1',  userId: 'user1'}, function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
       redisFeed.getFeed('user2', function(err, feeds){
-        assert(feeds.indexOf('post1')!=-1 );
+   	    var containsPost1 = false;
+    	feeds.some(function(value) {
+    		if (value.indexOf('post1')!=-1) {
+    			containsPost1 = true;
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	});
+        assert(containsPost1);
       });
       redisFeed.getFeed('user3', function(err, feeds){
-        assert(feeds.indexOf('post1')!=-1 );
+      	var containsPost1 = false;
+    	feeds.some(function(value) {
+    		if (value.indexOf('post1')!=-1) {
+    			containsPost1 = true;
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	});
+        assert(containsPost1);
       });
       done();
     });
