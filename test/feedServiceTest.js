@@ -76,8 +76,16 @@ describe('redisFeedTest', function(){
       redisFeed.getFeed('user2', function(err, feeds){
     	  assert(feeds.indexOf('post1')!=-1 );
       });
+      redisFeed.getFeedLastInsertTime('user2', function(err, lastInsertTime){
+    	  console.log("publishPostToFeeds, user2 lastInsertTime=" + lastInsertTime);
+    	  assert(lastInsertTime > 0);
+      });
       redisFeed.getFeed('user3', function(err, feeds){
     	  assert(feeds.indexOf('post1')!=-1 );
+      });
+      redisFeed.getFeedLastInsertTime('user3', function(err, lastInsertTime){
+    	  console.log("publishPostToFeeds, user3 lastInsertTime=" + lastInsertTime);
+    	  assert(lastInsertTime > 0);
       });
       done();
     });
