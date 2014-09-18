@@ -16,13 +16,15 @@ var feedApi = require('./routes/feed');
 app.get('/api/v1', function(req, res) {
   res.json({api: "feedService", version: 1});
 });
+
+// follow someone
 app.post('/api/v1/user/follow', feedApi.addFollower);
 
-
-
-// feed
+// New post
 app.post('/api/v1/post/', feedApi.addPost);
 
+// Load feed
+app.post('/api/v1/feed', feedApi.getFeed);
 
 // catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

@@ -7,9 +7,7 @@ var FeedService = require("../lib/feedService"),
   utils = require("../lib/utils"),
   moment = require("moment");
 
-
 service.addDelegate(redisFeed);
-
 
 exports.addFollower = function(req, res) {
   var userId = req.body.userId;
@@ -20,12 +18,19 @@ exports.addFollower = function(req, res) {
   });
 };
 
-
 exports.addPost = function (req, res) {
   var post = req.body;
   post.postId = utils.genId();
   post.timeMsCreated = moment().valueOf();
   service.addPost(post, function(error, result){
+    console.log(result);
+    res.status(200).end(""+ result);
+  });
+};
+
+exports.getFeed = function (req, res) {
+  var loadFeedParams = req.body;
+  service.getFeed(loadFeedParams, function(error, result){
     console.log(result);
     res.status(200).end(""+ result);
   });

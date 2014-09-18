@@ -73,15 +73,15 @@ describe('redisFeedTest', function(){
   it('should publish a post to feed without error', function(done){
     redisFeed.publishPostToFeeds({postId: 'post1',  userId: 'user1'}, function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
-      redisFeed.getFeed('user2', function(err, feeds){
-    	  assert(feeds.indexOf('post1')!=-1 );
+      redisFeed.getFeed({userId: 'user2'}, function(err, feeds){
+    	  assert(feeds[0].postId === 'post1');
       });
       redisFeed.getFeedLastInsertTime('user2', function(err, lastInsertTime){
     	  console.log("publishPostToFeeds, user2 lastInsertTime=" + lastInsertTime);
     	  assert(lastInsertTime > 0);
       });
-      redisFeed.getFeed('user3', function(err, feeds){
-    	  assert(feeds.indexOf('post1')!=-1 );
+      redisFeed.getFeed({userId: 'user3', largestInsertTimeAtClient: 999}, function(err, feeds){
+        assert(feeds[0].postId === 'post1');
       });
       redisFeed.getFeedLastInsertTime('user3', function(err, lastInsertTime){
     	  console.log("publishPostToFeeds, user3 lastInsertTime=" + lastInsertTime);
