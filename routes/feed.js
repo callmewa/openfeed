@@ -23,15 +23,18 @@ exports.addPost = function (req, res) {
   post.postId = utils.genId();
   post.timeMsCreated = moment().valueOf();
   service.addPost(post, function(error, result){
-    console.log(result);
+    console.log("addPost, result=" + result);
     res.status(200).end(""+ result);
   });
 };
 
 exports.getFeed = function (req, res) {
-  var loadFeedParams = req.body;
+  var loadFeedParams = {};
+  loadFeedParams['userId'] = req.query.user_id;
+  loadFeedParams['maxToFetch'] = req.query.max_to_fetch;
+  loadFeedParams['largestInsertTimeAtClient'] = req.query.largest_insert_time_at_client;
   service.getFeed(loadFeedParams, function(error, result){
-    console.log(result);
+    console.log("getFeed, result=" + result);
     res.status(200).end(""+ result);
   });
 };

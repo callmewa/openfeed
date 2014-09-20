@@ -24,7 +24,7 @@ app.post('/api/v1/user/follow', feedApi.addFollower);
 app.post('/api/v1/post/', feedApi.addPost);
 
 // Load feed
-app.post('/api/v1/feed', feedApi.getFeed);
+app.get('/api/v1/feed', feedApi.getFeed);
 
 // catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
