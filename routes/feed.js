@@ -34,8 +34,6 @@ exports.getFeed = function (req, res) {
   loadFeedParams['maxToFetch'] = req.query.max_to_fetch;
   loadFeedParams['largestInsertTimeAtClient'] = req.query.largest_insert_time_at_client;
   service.getFeed(loadFeedParams, function(error, result){
-    var feedResult = JSON.stringify(result);
-    console.log("getFeed, feedResult=" + feedResult);
-    res.status(200).end(feedResult);
+    res.status(200).json(result);
   });
 };
