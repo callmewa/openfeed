@@ -31,6 +31,7 @@ exports.addPost = function (req, res) {
 exports.getFeed = function (req, res) {
   var loadFeedParams = {};
   loadFeedParams['userId'] = req.query.user_id;
+  loadFeedParams['timeMsInsertedSince'] = req.query.time_ms_inserted_since;
   loadFeedParams['maxToFetch'] = req.query.max_to_fetch;
   loadFeedParams['largestInsertTimeAtClient'] = req.query.largest_insert_time_at_client;
   service.getFeed(loadFeedParams, function(error, result){
