@@ -30,8 +30,4 @@ examples
 
     For authenticate request
 
-    {
-        "username": "xxx",
-        "password": "xxx",
-        ...
-    }
+    Authorization: Basic d2E6d2E=

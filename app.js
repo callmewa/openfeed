@@ -6,7 +6,7 @@ var debug = require('debug')('app');
 var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+  , BasicStrategy = require('passport-http').BasicStrategy;
 
 var app = express();
 
@@ -16,14 +16,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // passport authentication
 app.use(passport.initialize());
-passport.use(new LocalStrategy(
+passport.use(new BasicStrategy(
   function(username, password, done) {
     return done(null, {username: username});
   }
 ));
 
 // requires {"usename": "xxx", "password": "xxx"}
-var authenticate = passport.authenticate('local', { session: false });
+var authenticate = passport.authenticate('basic', { session: false });
 
 // for test only
 app.post('/login',
