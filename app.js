@@ -5,11 +5,35 @@
 var debug = require('debug')('app');
 var express = require('express');
 var bodyParser = require('body-parser');
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+
+// passport authentication
+app.use(passport.initialize());
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    return done(null, {username: username});
+  }
+));
+
+// requires {"usename": "xxx", "password": "xxx"}
+var authenticate = passport.authenticate('local', { session: false });
+
+// for test only
+app.post('/login',
+  authenticate,
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.json(req.user.username);
+  });
+
 
 // list of routes
 var feedApi = require('./routes/feed');
@@ -21,7 +45,7 @@ app.get('/api/v1', function(req, res) {
 app.post('/api/v1/user/follow', feedApi.addFollower);
 
 // New post
-app.post('/api/v1/post/', feedApi.addPost);
+app.post('/api/v1/post/', authenticate, feedApi.addPost);
 
 // Load feed
 app.get('/api/v1/feed', feedApi.getFeed);

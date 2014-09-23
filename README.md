@@ -26,3 +26,12 @@ examples
         "message": "this is a post"
       }
     }
+
+
+    For authenticate request
+
+    {
+        "username": "xxx",
+        "password": "xxx",
+        ...
+    }
