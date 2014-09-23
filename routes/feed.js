@@ -19,7 +19,7 @@ exports.addFollower = function(req, res) {
 };
 
 exports.addPost = function (req, res) {
-  var post = req.body.post;
+  var post = req.body;
   post.postId = utils.genId();
   post.timeMsCreated = moment().valueOf();
   service.addPost(post, function(error, result){
