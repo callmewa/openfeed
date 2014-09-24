@@ -50,6 +50,12 @@ app.post('/api/v1/post/', authenticate, feedApi.addPost);
 // Load feed
 app.get('/api/v1/feed', feedApi.getFeed);
 
+// New comment on post
+app.post('/api/v1/post/comments', feedApi.addComment);
+
+//Load post comments
+app.get('/api/v1/post/comments', feedApi.getThread);
+
 // catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

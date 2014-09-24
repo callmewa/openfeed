@@ -91,11 +91,11 @@ describe('redisFeedTest', function(){
     });
   });
 
-  it('should publish a post to feed without error', function(done){
+  it('should publish a comment to post without error', function(done){
     redisFeed.addComment(FeedService.Comment.createComment('post1', 'comment1', 'user1', 'this is a comment 1'));
     redisFeed.addComment(FeedService.Comment.createComment('post1', 'comment2', 'user1', 'this is a comment 2'));
 
-    redisFeed.getThread('post1',  function(err, result){
+    redisFeed.getThread({postId: 'post1', timeMsCreatedSince: 0},  function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
       assert(result.length === 2);
       done();

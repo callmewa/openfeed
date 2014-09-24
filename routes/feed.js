@@ -38,3 +38,23 @@ exports.getFeed = function (req, res) {
     res.status(200).json(result);
   });
 };
+
+exports.addComment = function (req, res) {
+  var postComment = req.body;
+  postComment.commentId = utils.genId();
+  postComment.timeMsCreated = moment().valueOf();
+  service.addComment(postComment, function(error, result){
+    console.log("addComment, result=" + result);
+    res.status(200).end(""+ result);
+  });
+};
+
+exports.getThread = function (req, res) {
+  var loadCommentsParams = {};
+  loadCommentsParams['postId'] = req.query.post_id;
+  loadCommentsParams['timeMsCreatedSince'] = req.query.time_ms_created_since;
+  loadCommentsParams['maxToFetch'] = req.query.max_to_fetch;
+  service.getFeed(loadCommentsParams, function(error, result){
+    res.status(200).json(result);
+  });
+};
