@@ -43,9 +43,8 @@ describe('redisFeedTest', function(){
     done();
   });
 
-
   it('should add and get the post without error', function(done){
-	var postId = utils.genId();
+	var postId = "post1";
     redisFeed.addPost(
     		FeedService.UserPost.createPost(postId, 'user1', 'text', 'blah blah blah'),
     		function(err, result) {
