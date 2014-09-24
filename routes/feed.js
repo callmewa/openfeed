@@ -54,7 +54,7 @@ exports.getThread = function (req, res) {
   loadCommentsParams['postId'] = req.query.post_id;
   loadCommentsParams['timeMsCreatedSince'] = req.query.time_ms_created_since;
   loadCommentsParams['maxToFetch'] = req.query.max_to_fetch;
-  service.getFeed(loadCommentsParams, function(error, result){
+  service.getThread(loadCommentsParams, function(error, result){
     res.status(200).json(result);
   });
 };
