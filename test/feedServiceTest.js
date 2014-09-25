@@ -59,11 +59,15 @@ describe('redisFeedTest', function(){
   it('should like get likes post without error', function(done){
     redisFeed.likePost({postId: 'post1',  userId: 'user2'});
     redisFeed.likePost({postId: 'post1',  userId: 'user3'});
-    redisFeed.getPostLikes('post1',function(err, result){
+    redisFeed.getPostLikes(
+        {postId: 'post1', timeMsLikeSince: 0, maxToFetch: 20},
+        function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
       assert(result.length === 2);
-      result.should.containEql('user2');
-      result.should.containEql('user3');
+      assert(result[0].likerId === 'user2' || 
+          result[0].likerId === 'user3');
+      assert(result[1].likerId === 'user2' || 
+          result[1].likerId === 'user3');
       done();
     });
   });
