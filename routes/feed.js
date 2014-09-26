@@ -31,7 +31,7 @@ exports.addPost = function (req, res) {
 exports.getFeed = function (req, res) {
   var loadFeedParams = {};
   loadFeedParams['userId'] = req.query.user_id;
-  loadFeedParams['timeMsInsertedSince'] = req.query.time_ms_inserted_since;
+  loadFeedParams['timeSince'] = req.query.time_since;
   loadFeedParams['maxToFetch'] = req.query.max_to_fetch;
   loadFeedParams['largestInsertTimeAtClient'] = req.query.largest_insert_time_at_client;
   service.getFeed(loadFeedParams, function(error, result){
@@ -52,7 +52,7 @@ exports.addComment = function (req, res) {
 exports.getThread = function (req, res) {
   var loadCommentsParams = {};
   loadCommentsParams['postId'] = req.query.post_id;
-  loadCommentsParams['timeMsCreatedSince'] = req.query.time_ms_created_since;
+  loadCommentsParams['timeSince'] = req.query.time_since;
   loadCommentsParams['maxToFetch'] = req.query.max_to_fetch;
   service.getThread(loadCommentsParams, function(error, result){
     res.status(200).json(result);
@@ -70,7 +70,7 @@ exports.likePost = function (req, res) {
 exports.getPostLikes = function (req, res) {
   var loadLikesParams = {};
   loadLikesParams['postId'] = req.query.post_id;
-  loadLikesParams['timeMsLikeSince'] = req.query.time_ms_like_since;
+  loadLikesParams['timeSince'] = req.query.time_since;
   loadLikesParams['maxToFetch'] = req.query.max_to_fetch;
   service.getPostLikes(loadLikesParams, function(error, result){
     res.status(200).json(result);

@@ -60,7 +60,7 @@ describe('redisFeedTest', function(){
     redisFeed.likePost({postId: 'post1',  likerUserId: 'user2', isLiked: true});
     redisFeed.likePost({postId: 'post1',  likerUserId: 'user3', isLiked: true});
     redisFeed.getPostLikes(
-        {postId: 'post1', timeMsLikeSince: 0, maxToFetch: 20},
+        {postId: 'post1', timeSince: 0, maxToFetch: 20},
         function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
       assert(result.length === 2);
@@ -78,7 +78,7 @@ describe('redisFeedTest', function(){
     redisFeed.likePost({postId: 'post1',  likerUserId: 'user2', isLiked: false});
     redisFeed.likePost({postId: 'post1',  likerUserId: 'user3', isLiked: false});
     redisFeed.getPostLikes(
-        {postId: 'post1', timeMsLikeSince: 0, maxToFetch: 20},
+        {postId: 'post1', timeSince: 0, maxToFetch: 20},
         function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
       assert(result.length === 0);
@@ -111,7 +111,7 @@ describe('redisFeedTest', function(){
     redisFeed.addComment(FeedService.Comment.createComment('post1', 'comment1', 'user1', 'this is a comment 1'));
     redisFeed.addComment(FeedService.Comment.createComment('post1', 'comment2', 'user1', 'this is a comment 2'));
 
-    redisFeed.getThread({postId: 'post1', timeMsCreatedSince: 0},  function(err, result){
+    redisFeed.getThread({postId: 'post1', timeSince: 0},  function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
       assert(result.length === 2);
       done();
