@@ -57,8 +57,8 @@ describe('redisFeedTest', function(){
   });
 
   it('should like get likes post without error', function(done){
-    redisFeed.likePost({postId: 'post1',  userId: 'user2'});
-    redisFeed.likePost({postId: 'post1',  userId: 'user3'});
+    redisFeed.likePost({postId: 'post1',  likerUserId: 'user2'});
+    redisFeed.likePost({postId: 'post1',  likerUserId: 'user3'});
     redisFeed.getPostLikes(
         {postId: 'post1', timeMsLikeSince: 0, maxToFetch: 20},
         function(err, result){

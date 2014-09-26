@@ -58,3 +58,11 @@ exports.getThread = function (req, res) {
     res.status(200).json(result);
   });
 };
+
+exports.likePost = function (req, res) {
+  var postLike = req.body;
+  service.likePost(postLike, function(error, result){
+    console.log("likePost, result=" + result);
+    res.status(200).end(""+ result);
+  });
+};
