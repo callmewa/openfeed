@@ -59,6 +59,9 @@ app.get('/api/v1/post/comments', feedApi.getThread);
 // Like a post
 app.post('/api/v1/post/likes', feedApi.likePost);
 
+// Get post likes
+app.get('/api/v1/post/likes', feedApi.getPostLikes);
+
 // catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

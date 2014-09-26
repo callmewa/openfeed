@@ -57,21 +57,34 @@ describe('redisFeedTest', function(){
   });
 
   it('should like get likes post without error', function(done){
-    redisFeed.likePost({postId: 'post1',  likerUserId: 'user2'});
-    redisFeed.likePost({postId: 'post1',  likerUserId: 'user3'});
+    redisFeed.likePost({postId: 'post1',  likerUserId: 'user2', isLiked: true});
+    redisFeed.likePost({postId: 'post1',  likerUserId: 'user3', isLiked: true});
     redisFeed.getPostLikes(
         {postId: 'post1', timeMsLikeSince: 0, maxToFetch: 20},
         function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
       assert(result.length === 2);
-      assert(result[0].likerId === 'user2' || 
-          result[0].likerId === 'user3');
-      assert(result[1].likerId === 'user2' || 
-          result[1].likerId === 'user3');
+      assert(result[0].likerUserId === 'user2' || 
+          result[0].likerUserId === 'user3');
+      assert(result[1].likerUserId === 'user2' || 
+          result[1].likerUserId === 'user3');
       done();
     });
   });
 
+  it('should unlike get likes post without error', function(done){
+    redisFeed.likePost({postId: 'post1',  likerUserId: 'user2', isLiked: true});
+    redisFeed.likePost({postId: 'post1',  likerUserId: 'user3', isLiked: true});
+    redisFeed.likePost({postId: 'post1',  likerUserId: 'user2', isLiked: false});
+    redisFeed.likePost({postId: 'post1',  likerUserId: 'user3', isLiked: false});
+    redisFeed.getPostLikes(
+        {postId: 'post1', timeMsLikeSince: 0, maxToFetch: 20},
+        function(err, result){
+      redisFeed.redis.print(err, JSON.stringify(result));
+      assert(result.length === 0);
+      done();
+    });
+  });
 
   it('should publish a post to feed without error', function(done){
     redisFeed.publishPostToFeeds({postId: 'post1',  userId: 'user1'}, function(err, result){

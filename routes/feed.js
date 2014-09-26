@@ -66,3 +66,13 @@ exports.likePost = function (req, res) {
     res.status(200).end(""+ result);
   });
 };
+
+exports.getPostLikes = function (req, res) {
+  var loadLikesParams = {};
+  loadLikesParams['postId'] = req.query.post_id;
+  loadLikesParams['timeMsLikeSince'] = req.query.time_ms_like_since;
+  loadLikesParams['maxToFetch'] = req.query.max_to_fetch;
+  service.getPostLikes(loadLikesParams, function(error, result){
+    res.status(200).json(result);
+  });
+};
