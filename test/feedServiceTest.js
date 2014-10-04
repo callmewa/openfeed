@@ -110,7 +110,7 @@ describe('redisFeedTest', function(){
   it('should publish a post to category feed without error', function(done){
     redisFeed.publishPostToCategoryFeed('post1', '3m', 9999, function(err, result){
       redisFeed.redis.print(err, JSON.stringify(result));
-      redisFeed.getCategoryFeed({category: '3m', userId: 'user2'}, function(err, feeds){
+      redisFeed.getCategoryFeed({category: '3m', userId: 'user2', offset: 0}, function(err, feeds){
         assert(feeds[0].postId === 'post1');
       });
       done();
